@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Taulell {
@@ -26,13 +27,13 @@ public class Taulell {
         System.out.println("\t\t\t\t\t\t\t\t\t\t   ―――――――");
         System.out.println("\t\t\t\t\t\t\t\t\t\t  | BATTLESHIP |");
         System.out.println("\t\t\t\t\t\t\t\t\t\t   ―――――――\n");
-        System.out.println("Jugador 1 \t\t\t\t\t\t\t\t\t\t\t\tJugador 2");
-        System.out.println("\n\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t\t\t\t\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10");
         mostrarTaulell(taulell, taulell2);
-        preguntes();
+        preguntes(taulell, taulell2);
     }
 
     public static void mostrarTaulell(char [][]taulell, char [][]taulell2){
+        System.out.println("Jugador 1 \t\t\t\t\t\t\t\t\t\t\t\tJugador 2");
+        System.out.println("\n\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t\t\t\t\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10");
         for (int i=0; i< taulell.length; i++){
             System.out.print(i+1);
             for (int j=0;j<taulell[i].length; j++){
@@ -46,7 +47,8 @@ public class Taulell {
         }
     }
 
-    public static void preguntes(){
+    public static void preguntes(char [][]taulell, char [][]taulell2){
+
         Scanner num = new Scanner(System.in);
 
         System.out.println("\nBaixells disponibles: ");
@@ -62,10 +64,25 @@ public class Taulell {
         System.out.print("\nCom el vols col·locar, horitzontal o vertical ( h / v )?");
         String posicio = num.next();
         System.out.print("\nEn quina columna el vols col·locar? ");
-        int columna = num.nextInt();
+        int fila = num.nextInt()-1;
         System.out.print("\nEn quina fila el vols col·locar? ");
-        int fila = num.nextInt();
+        int columna = num.nextInt()-1;
+        colocar(fila, columna, posicio, taulell, baixell);
+        mostrarTaulell(taulell,taulell2);
+    }
 
+    public static void colocar(int fila, int columna, String posicio,char [][]taulell, int baixell){
+
+        if (Objects.equals(posicio, "h")){
+            for (int i=0; i<baixell; i++){
+                taulell[columna][fila+i]='x';
+                System.out.println(columna | fila+i);
+            }
+        } else if (Objects.equals(posicio, "v")){
+            for (int i=0; i<baixell; i++){
+                taulell[columna+i][fila]='x';
+            }
+        }
     }
 
 
